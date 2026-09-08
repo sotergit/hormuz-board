@@ -1,0 +1,51 @@
+name: live-traffic
+# God's-eye feed for the Hormuz Board: every 10 min pull all AIS ships (hormuz.data-tracking.net)
+# and all ADS-B aircraft (adsb.lol) in the region, compact to live.json, force-push to branch "live".
+# The page reads https://raw.githubusercontent.com/sotergit/hormuz-board/live/live.json
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: live
+  cancel-in-progress: true
+jobs:
+  snap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Build live.json
+        run: |
+          mkdir -p out
+          cat > snap.mjs <<'EOF'
+          import fs from 'node:fs';
+          const CAT={'VLCC/ULCC':'T','Crude Oil Tanker':'T','Product/Chem Tanker':'T','Oil/Chemical Tanker':'T','Tanker':'T','LNG Tanker':'G','LPG/LNG Tanker':'G','Bulk Carrier':'C','Container Ship':'C','Ro-Ro/Container':'C','General Cargo':'C','Cargo':'C','Military':'M','Passenger':'P'};
+          const r2=v=>Math.round(v*100)/100;
+          const j=async u=>{const r=await fetch(u,{headers:{'user-agent':'hormuz-board live feed (github actions)'}});if(!r.ok)throw new Error(u+' -> '+r.status);return r.json();};
+          const out={t:new Date().toISOString().slice(0,16).replace('T',' ')+' UTC',src:'hormuz.data-tracking.net (AIS) · adsb.lol (ADS-B) · refreshed every 10 min',ships:[],aircraft:[],err:[]};
+          try{const s=await j('https://hormuz.data-tracking.net/api/ships');out.totalShips=s.length;
+            out.ships=s.filter(x=>CAT[x.ship_category]&&x.latitude!=null&&x.longitude!=null).map(x=>[r2(x.longitude),r2(x.latitude),CAT[x.ship_category],x.flag||'',String(x.name||'').slice(0,16),Math.round(x.speed||0),x.ship_category==='VLCC/ULCC'?'V':'',x.course==null?null:Math.round(x.course)%360]);
+          }catch(e){out.err.push('ships: '+e.message)}
+          const seen=new Set();
+          for(const [la,lo] of [[26,54],[27.5,49.5],[24,58.5],[29.5,50.5]]){
+            try{const a=await j(`https://api.adsb.lol/v2/point/${la}/${lo}/250`);
+              for(const p of (a.ac||[])){if(!p.hex||seen.has(p.hex)||p.lat==null||p.lon==null)continue;seen.add(p.hex);
+                out.aircraft.push([r2(p.lon),r2(p.lat),(p.dbFlags&1)?1:0,String(p.t||'').slice(0,6),String(p.flight||p.r||'').trim().slice(0,10),typeof p.alt_baro==='number'?p.alt_baro:null,Math.round(p.track||0),Math.round(p.gs||0)]);}
+            }catch(e){out.err.push(`adsb ${la},${lo}: `+e.message)}
+          }
+          if(out.ships.length<50&&out.aircraft.length<5){console.error('feeds empty',out.err);process.exit(1);}
+          fs.writeFileSync('out/live.json',JSON.stringify(out));
+          console.log(out.t,out.ships.length,'ships of',out.totalShips,'·',out.aircraft.length,'aircraft (',out.aircraft.filter(a=>a[2]).length,'mil ) · errors:',out.err);
+          EOF
+          node snap.mjs
+      - name: Push to branch live (single commit, no history)
+        run: |
+          cd out
+          git init -q -b live
+          git config user.name "hormuz-live-bot"
+          git config user.email "live-bot@users.noreply.github.com"
+          git add live.json
+          git commit -qm "live $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" live
