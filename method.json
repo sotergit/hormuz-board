@@ -11,44 +11,44 @@
    "trade": "Brent bid; 30-yr yield bid; Polymarket 'ceasefire by Oct 31' looks rich above 25%."
   },
   "2": {
-   "plain": "Most likely next 14 days: Iran seizes a tanker; a Gulf energy strike is the second card.",
-   "trade": "Tanker rates and war-risk premia up; XLE over SPX; long-dated Brent calls cheap if force-scenario odds are right."
-  },
-  "3": {
-   "plain": "Iran wants to force an escalation before Nov 3; the US wants to squeeze and hold.",
-   "trade": "No deal premium: fade rallies on 'talks' headlines unless a convoy actually transits."
-  },
-  "4": {
    "plain": "The door is shut: 4 ships a day.",
    "trade": "Each week under 10 transits/day has lifted Brent; creditor selling steepens the curve."
   },
-  "5": {
+  "3": {
+   "plain": "Carriers hold outside Iran's 300 km ring; the fight is inside it.",
+   "trade": "A carrier inside the ring is the tell for a wider war."
+  },
+  "4": {
    "plain": "Every Iranian blow now gets a US answer within a day; the ladder has climbed from ship attacks to fire on US warships.",
    "trade": "Response lag under 2 days = escalation risk premium; Brent call skew richer; watch for the first rung-9 act since February."
   },
+  "5": {
+   "plain": "Most likely next 14 days: Iran seizes a tanker; a Gulf energy strike is the second card.",
+   "trade": "Tanker rates and war-risk premia up; XLE over SPX; long-dated Brent calls cheap if force-scenario odds are right."
+  },
   "6": {
+   "plain": "Iran wants to force an escalation before Nov 3; the US wants to squeeze and hold.",
+   "trade": "No deal premium: fade rallies on 'talks' headlines unless a convoy actually transits."
+  },
+  "7": {
    "plain": "America's quiet bill: gas, yields, rial.",
    "trade": "DXY firm short-term (safe haven), soft long-term (reserve share)."
   },
-  "7": {
+  "8": {
    "plain": "Iran and the small Gulf states pay; Israel doesn't.",
    "trade": "Qatar and Kuwait sovereign spreads wider; Israeli equities unaffected."
   },
-  "8": {
-   "plain": "The engine (lobby, arms, oil) still beats the brake (voters) — but the gap is closing.",
-   "trade": "LMT/RTX hold while engine ≥8; first brake-over-engine print is the sell signal."
-  },
   "9": {
-   "plain": "Stuck 30%, Bigger war 28%, Strait regime 14%, Signed deal 10%.",
-   "trade": "Bigger-war above 30% is the level to hedge with long-dated Brent calls; Signed deal above 20% is the level for Brent < $85."
-  },
-  "10": {
    "plain": "Russia and Egypt win; Asia's importers lose; creditors trim.",
    "trade": "Long RUB oil revenue proxies; short INR/JPY on oil-import stress."
   },
+  "10": {
+   "plain": "The engine (lobby, arms, oil) still beats the brake (voters) — but the gap is closing.",
+   "trade": "LMT/RTX hold while engine ≥8; first brake-over-engine print is the sell signal."
+  },
   "11": {
-   "plain": "Carriers hold outside Iran's 300 km ring; the fight is inside it.",
-   "trade": "A carrier inside the ring is the tell for a wider war."
+   "plain": "Stuck 30%, Bigger war 28%, Strait regime 14%, Signed deal 10%.",
+   "trade": "Bigger-war above 30% is the level to hedge with long-dated Brent calls; Signed deal above 20% is the level for Brent < $85."
   },
   "12": {
    "plain": "Weak signals: watch Bushehr and Bahrain.",
@@ -257,5 +257,6 @@
    "moves": "Monthly: China customs (~7th), Korea MOTIE (1st), Brazil MDIC (1st week), Malaysia DOSM (~20th), Russian MinFin oil & gas revenue (3rd). Quarterly: Q3 GDP prints late Oct (Korea, China) and Nov (Russia, Brazil). IMF October WEO replaces the July forecast column.",
    "trade": "The trade is not Russia or China — it is the AI-hardware exporters (Korea, Malaysia, Taiwan) and non-Gulf crude exporters (Brazil) that carry a war premium without war exposure; China gets export volume but no domestic lift; Russia gets prices and a current-account cushion but not budget cash."
   }
- ]
+ ],
+ "sections": "2026-09-08 order: 1 pressure · 2 door · 3 map · 4 ladder · 5 next move · 6 plans · 7 bill · 8 who pays · 9 world · 10 under the war · 11 endings · 12 whispers"
 }
