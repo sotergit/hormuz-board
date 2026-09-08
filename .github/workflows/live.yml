@@ -33,12 +33,12 @@ jobs:
           for(const [la,lo] of [[26,54],[27.5,49.5],[24,58.5],[29.5,50.5]]){
             try{await sleep(1500);let a;try{a=await j(`https://api.adsb.lol/v2/point/${la}/${lo}/250`);}catch(e){await sleep(4000);a=await j(`https://api.adsb.lol/v2/point/${la}/${lo}/250`);}
               for(const p of (a.ac||[])){if(!p.hex||seen.has(p.hex)||p.lat==null||p.lon==null)continue;seen.add(p.hex);
-                out.aircraft.push([r2(p.lon),r2(p.lat),(p.dbFlags&1)?1:0,String(p.t||'').slice(0,6),String(p.flight||p.r||'').trim().slice(0,10),typeof p.alt_baro==='number'?p.alt_baro:null,Math.round(p.track||0),Math.round(p.gs||0)]);}
+                out.aircraft.push([r2(p.lon),r2(p.lat),(p.dbFlags&1)?1:0,String(p.t||'').slice(0,6),String(p.flight||p.r||'').trim().slice(0,10),typeof p.alt_baro==='number'?p.alt_baro:null,Math.round(p.track||0),Math.round(p.gs||0),(p.category==='A7'||/^(H|EC|AS|R44|R66|B06|B407|B412|B429|A109|A139|A169|A189|S76|S92|UH|AH|CH|MH|HH)/.test(String(p.t||''))&&!/^(HA4T|HDJT|H25|HAWK)/.test(String(p.t||'')))?1:0]);}
             }catch(e){out.err.push(`adsb ${la},${lo}: `+e.message)}
           }
           if(out.ships.length<50&&out.aircraft.length<5){console.error('feeds empty',out.err);process.exit(1);}
           fs.writeFileSync('out/live.json',JSON.stringify(out));
-          console.log(out.t,out.ships.length,'ships of',out.totalShips,'·',out.aircraft.length,'aircraft (',out.aircraft.filter(a=>a[2]).length,'mil ) · errors:',out.err);
+          console.log(out.t,out.ships.length,'ships of',out.totalShips,'·',out.aircraft.length,'aircraft (',out.aircraft.filter(a=>a[2]).length,'mil',out.aircraft.filter(a=>a[8]).length,'heli ) · errors:',out.err);
           EOF
           node snap.mjs
       - name: Push to branch live (single commit, no history)
