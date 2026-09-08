@@ -29,8 +29,9 @@ jobs:
             out.ships=s.filter(x=>CAT[x.ship_category]&&x.latitude!=null&&x.longitude!=null).map(x=>[r2(x.longitude),r2(x.latitude),CAT[x.ship_category],x.flag||'',String(x.name||'').slice(0,16),Math.round(x.speed||0),x.ship_category==='VLCC/ULCC'?'V':'',x.course==null?null:Math.round(x.course)%360]);
           }catch(e){out.err.push('ships: '+e.message)}
           const seen=new Set();
+          const sleep=ms=>new Promise(r=>setTimeout(r,ms));
           for(const [la,lo] of [[26,54],[27.5,49.5],[24,58.5],[29.5,50.5]]){
-            try{const a=await j(`https://api.adsb.lol/v2/point/${la}/${lo}/250`);
+            try{await sleep(1500);let a;try{a=await j(`https://api.adsb.lol/v2/point/${la}/${lo}/250`);}catch(e){await sleep(4000);a=await j(`https://api.adsb.lol/v2/point/${la}/${lo}/250`);}
               for(const p of (a.ac||[])){if(!p.hex||seen.has(p.hex)||p.lat==null||p.lon==null)continue;seen.add(p.hex);
                 out.aircraft.push([r2(p.lon),r2(p.lat),(p.dbFlags&1)?1:0,String(p.t||'').slice(0,6),String(p.flight||p.r||'').trim().slice(0,10),typeof p.alt_baro==='number'?p.alt_baro:null,Math.round(p.track||0),Math.round(p.gs||0)]);}
             }catch(e){out.err.push(`adsb ${la},${lo}: `+e.message)}
