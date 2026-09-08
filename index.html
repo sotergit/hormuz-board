@@ -415,7 +415,7 @@ $("map").innerHTML=g;
 const svg=$("map");let vb={x:0,y:0,w:W,h:H};const setVB=()=>svg.setAttribute("viewBox",`${vb.x} ${vb.y} ${vb.w} ${vb.h}`);const zoomAt=(f,px,py)=>{const nw=Math.min(W,Math.max(W/6,vb.w*f)),nh=nw*H/W;vb.x=Math.min(Math.max(0,vb.x+(px-vb.x)*(1-nw/vb.w)),W-nw);vb.y=Math.min(Math.max(0,vb.y+(py-vb.y)*(1-nh/vb.h)),H-nh);vb.w=nw;vb.h=nh;setVB();};
 const toSVG=e=>{const r=svg.getBoundingClientRect();return [vb.x+(e.clientX-r.left)/r.width*vb.w,vb.y+(e.clientY-r.top)/r.height*vb.h];};
 if(!svg._z&&svg.addEventListener){svg._z=1;svg.style.cursor="grab";svg.style.touchAction="none";
- svg.addEventListener("wheel",e=>{if(!e.ctrlKey&&!e.metaKey&&vb.w===W&&e.deltaY>0)return;e.preventDefault();const [px,py]=toSVG(e);zoomAt(e.deltaY>0?1.15:0.87,px,py);},{passive:false});
+ svg.addEventListener("wheel",e=>{if(!e.ctrlKey&&!e.metaKey&&vb.w===W)return;e.preventDefault();const [px,py]=toSVG(e);zoomAt(e.deltaY>0?1.15:0.87,px,py);},{passive:false});
  let drag=null;svg.addEventListener("pointerdown",e=>{drag=[e.clientX,e.clientY,vb.x,vb.y];svg.setPointerCapture(e.pointerId);svg.style.cursor="grabbing";});
  svg.addEventListener("pointermove",e=>{if(!drag)return;const r=svg.getBoundingClientRect();vb.x=Math.min(Math.max(0,drag[2]-(e.clientX-drag[0])/r.width*vb.w),W-vb.w);vb.y=Math.min(Math.max(0,drag[3]-(e.clientY-drag[1])/r.height*vb.h),H-vb.h);setVB();});
  const up=()=>{drag=null;svg.style.cursor="grab";};svg.addEventListener("pointerup",up);svg.addEventListener("pointercancel",up);
