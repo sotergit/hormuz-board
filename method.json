@@ -59,7 +59,7 @@
   {
    "badge": "JUDGMENT",
    "counter": "the degree scale is our 0–10 pressure score × 10: 100° = capitulation (a side gives up its aim); each side's boiling point (68° / 66° / 70° / 70°) is where it starts acting against its own interest; the gap between boiling and 100° is how much punishment it can absorb before it folds. Small Gulf and Saudi–UAE are separate pots; the 'forced escalation' base case is Sam's judgment (prior 0.42) — falsified if no Iranian kinetic act by Oct 15",
-   "date": "2026-09-07",
+   "date": "2026-09-08",
    "id": "potsTS",
    "moves": "a strike on US forces, a tanker seizure, a talks contact, gas above $4.30 or below $3.80",
    "source": "rules/latest pots components",
@@ -207,7 +207,7 @@
   },
   {
    "badge": "JUDGMENT",
-   "date": "2026-09-07",
+   "date": "2026-09-08",
    "id": "narr",
    "source": "daily 3-region media sweep; internal 30/70 weighting"
   },
@@ -227,7 +227,7 @@
   {
    "badge": "MEASURED",
    "counter": "AIS counts miss dark transits (transponders off) and over-count small craft; PortWatch is the cleaner commercial series but a week late — read the two together",
-   "date": "2026-09-07",
+   "date": "2026-09-08",
    "id": "daily",
    "source": "In/out crossings: hormuz.data-tracking.net /api/crossings/daily (AIS via MarineTraffic feeds, polled every 30 min, all vessel sizes incl. dhows and service craft). Grey dot: IMF PortWatch commercial total (≈7-day lag). Incidents: iranwarlive + CENTCOM + Gulf media. Aircraft: adsb.lol.",
    "trade": "a sustained rise in outbound tankers (green) before PortWatch confirms it is the earliest 'door opening' signal"
@@ -235,7 +235,7 @@
   {
    "badge": "JUDGMENT",
    "counter": "the ladder shows the latest act, not cumulative damage; a quiet week does not lower the rung — only a pause or deal does",
-   "date": "2026-09-07",
+   "date": "2026-09-08",
    "id": "ladder",
    "moves": "any new act is placed on a rung the same run; a ceasefire or signed deal drops the line to 1 or 0",
    "source": "Windward incident log, CENTCOM releases, Gulf and Iranian media; dates measured, rung assignment is ours (rules/latest.ladder)",
