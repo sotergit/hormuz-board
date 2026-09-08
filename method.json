@@ -168,10 +168,22 @@
    "trade": "'Deal' above 25% has matched Brent < $90; 'Bigger war' above 30% has not yet occurred"
   },
   {
+   "id": "bondsTS",
    "badge": "MEASURED",
    "date": "2026-06-30",
-   "id": "bondsTS",
-   "source": "FRED Japan holdings monthly; TIC"
+   "source": "TIC via FRED FORTREASPOS (Japan 42609, China 41408, Cayman 36137, UK 13005), all maturities at market value, monthly; long-term-only FORLTTREASPOS for the bills split. Since-May = change from the end-April level; since-war = change from end-February.",
+   "counter": "Custodial data: Cayman is hedge funds and Belgium/Luxembourg/UK hold for others (some of it China). Market value, so part of each move is price, not sales — the June bill sell-off is real, the long-bond marks are partly the yield rise. Six-week lag; July lands Sep 17 and can rewrite the ranking.",
+   "moves": "TIC monthly ~17th (July on Sep 17); ranking re-run each month from the same four series plus Norway and Saudi as challengers",
+   "trade": "Bills are what an FX-intervention seller dumps: a rising Japanese bill sale with a falling yen is the tell for the next intervention; the 30-yr reacts to China and Cayman, not Japan"
+  },
+  {
+   "id": "custody",
+   "badge": "MEASURED",
+   "date": "2026-09-02",
+   "source": "Federal Reserve H.4.1, memorandum item: marketable Treasury securities held in custody for foreign official and international accounts (FRED WMTSECL1), Wednesday level, published Thursday 16:30 ET. Weekly since Apr 29 2026.",
+   "counter": "Covers official accounts only (central banks, sovereign funds), not hedge funds or UK banks, and only what is custodied at the New York Fed — a central bank moving paper to Euroclear shows as a sale here without selling. It is a market-value level, so yields move it too. No public source gives daily per-country holdings; this is the closest weekly proxy.",
+   "moves": "Every Thursday evening: append the new Wednesday level (the 19:00 run); a weekly drop above $30B is the alert line; cross-check with Japan MoF weekly securities flows (Thursday) when available",
+   "trade": "Custody −$134B since end-April with the 30-yr at a 20-year high = official selling into a bear-steepener; a week of +$30B or more after an intervention has marked the local top in yields twice (Jul 29, Aug 26)"
   },
   {
    "badge": "JUDGMENT",
