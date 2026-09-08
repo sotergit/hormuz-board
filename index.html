@@ -24,6 +24,20 @@ header .meta{font-family:"IBM Plex Mono",monospace;font-size:14px;color:var(--in
 .tile svg{width:100%;height:auto;display:block}
 .big{font-family:"Bricolage Grotesque",sans-serif;font-size:56px;font-weight:800;letter-spacing:-.04em;line-height:1}
 .hot{color:var(--hot)}.warm{color:var(--warm)}.cool{color:var(--cool)}
+.ticker{margin-top:12px;border:1px solid var(--line);background:var(--bg2);box-shadow:var(--shadow);overflow:hidden}
+.ticker .bar{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--line)}
+.ticker .lab{flex:0 0 auto;font:700 12.5px "IBM Plex Mono",monospace;letter-spacing:.14em;padding:10px 14px;background:var(--ink);color:var(--bg2)}
+.ticker .lab small{display:block;font-weight:500;letter-spacing:.05em;opacity:.7;text-transform:none}
+.ticker .track{flex:1 1 auto;overflow:hidden;white-space:nowrap;position:relative}
+.ticker .track:hover .run{animation-play-state:paused}
+.ticker .run{display:inline-block;padding-left:100%;animation:tk 240s linear infinite;font-size:15px}
+.ticker .run span{margin-right:44px}
+@keyframes tk{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+.ticker .list{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+.ticker .it{padding:10px 14px;border-right:1px solid var(--line);font-size:14.5px;line-height:1.4;color:var(--ink)}.ticker .it:last-child{border-right:0}
+.ticker .it small{display:block;color:var(--ink3);font-family:"IBM Plex Mono",monospace;font-size:12px;margin-top:3px}
+.tg{display:inline-block;font:700 11px "IBM Plex Mono",monospace;letter-spacing:.12em;padding:2px 6px;border-radius:3px;margin-right:8px;vertical-align:middle;color:#fff}.tg.war{background:var(--hot)}.tg.econ{background:var(--chart)}.tg.signal{background:var(--warm)}
+@media (max-width:900px){.ticker .list{grid-template-columns:1fr}.ticker .it{border-right:0;border-bottom:1px solid var(--line)}}
 .story{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:16px}
 .badge{display:inline-block;font:700 11px "IBM Plex Mono",monospace;letter-spacing:.12em;padding:3px 7px;border-radius:3px;vertical-align:middle;margin-left:8px}.badge.M{background:var(--cool);color:#fff}.badge.D{background:var(--chart);color:#fff}.badge.J{background:var(--warm);color:#fff}
 .tile h2 .hk{font:600 12.5px "IBM Plex Sans",sans-serif;color:var(--ink3);margin-left:8px;cursor:pointer;text-decoration:underline dotted;vertical-align:middle}
@@ -55,6 +69,7 @@ footer{margin-top:36px;padding-top:12px;border-top:1px solid var(--line);font-si
 <div class="wrap">
 <header><div><h1>Hormuz Board</h1><div class="sub">The whole war on one page. Every chart is a line over time with the events that moved it. Updated daily.</div></div><div class="meta">Day <b id="day">—</b> · <b id="asof">—</b><br>Feed <b class="live" id="feed"><i></i><span>embedded</span></b> · next capture <b id="next">—</b></div></header>
 
+<div class="ticker" id="ticker"><div class="bar"><div class="lab">HEADLINES<small id="tkTime">—</small></div><div class="track"><div class="run" id="tkRun"></div></div></div><div class="list" id="tkList"></div></div>
 <div class="story" id="story"></div>
 
 <div class="sec"><b>1</b>The pressure — who's at the boiling point, and why</div>
@@ -171,6 +186,17 @@ const D={
    series:[["10-yr yield %",[4.32,4.48,4.47,4.60,4.68,4.77],"hot","up"],["Gas $/gal",[4.10,4.48,4.05,3.93,4.06,4.15],"warm","up"],["Dollar index",[119.0,118.8,120.1,120.6,118.9,118.7],"chart","flat"],["Japan's Treasuries $bn",[1057,1050,1046,null,null,null],"cool","down"]]},
  yield:[["Apr",4.32],["May",4.48],["Jun",4.47],["Jul",4.60],["Aug",4.68],["Sep",4.77]],
  pain:[["Iran",9,"hot"],["Qatar · Kuwait · Bahrain",9,"hot"],["Saudi · UAE",6,"warm"],["United States",7,"hot"],["Israel",2,"cool"]],
+ headlines:{updated:"2026-09-07 19:00",items:[
+  ["war","IRGC ballistic missiles fired at a US carrier and destroyer — evaded; US disables three Iranian crude carriers off Kharg, Jask and in the Gulf of Oman","CENTCOM · Tasnim · Sep 5","west"],
+  ["econ","Brent $97, +9% in three weeks; US gas $4.15, a September record; 10-yr yield 4.77%","EIA · FRED · Sep 7","west"],
+  ["signal","Iran and Oman 'agreed' a Hormuz corridor — details unpublished; market prices 40% signed by Oct 31","The National · Al-Monitor · Sep 7","gulf"],
+  ["war","Iranian strike on Kuwait's US-hosting bases; Ghalibaf: 'the era of proportional responses has ended'","Kuwait Times · Gulf News · Sep 4–7","gulf"],
+  ["econ","Foreign central banks cut Treasuries $233B Feb–Jun; Japan −$122B, China at a 2008 low","TIC · FRED · Jun data","west"],
+  ["signal","Iran warns of a 'restricted zone' beyond the strait within days; new naval mines claimed laid","Tasnim · Tehran Times · Sep 5–7","ir"],
+  ["war","US Navy escorted 40 merchant ships / 18M barrels through Hormuz in one day — a wartime high","Anadolu · US official · Sep 1","west"],
+  ["signal","Iran warns South Korea against deploying to the Gulf — an allied escort coalition forming","Press TV · Sep 7","ir"],
+  ["econ","Trump approval 33%; support for the Iran war 31%, down from 37% in March","Reuters/Ipsos · UMass · Aug","west"]
+ ]},
  wants:[
   {"who":"Iran","want":"The MOU implemented — and a strait regime it co-writes with Oman","line":"No return to the old free passage; the 'door' stays a lever.","tell":"Iran–Oman technical talks on transit rules, pilotage or fees · IRGC lets Oman-flagged convoys through","tag":"judgment","col":"hot"},
   {"who":"Gulf states","want":"No Iranian control of the strait, no toll — but Abu Dhabi is opening a channel","line":"Regime collapse is a pipe dream; the realists are starting to say so.","tell":"UAE–Iran ministerial contact · GCC statement that omits 'regime' language · Qatar/Oman joint mediation","tag":"judgment","col":"warm"},
@@ -237,17 +263,16 @@ const D={
  narr:[["us","Washington says","\"The Strait of Hormuz is fully open and under US Navy control.\" 80 mines cleared since April; 40 ships escorted with 18M barrels on Sep 1 — a wartime high.","senior US official · Anadolu · Sep 1–5"],["ir","Tehran says","\"The strait is completely closed and under the control of the armed forces.\" New mines laid; a restricted zone beyond the strait within days; \"the era of proportional responses has ended.\"","Rezaei, Ghalibaf · Tasnim, Tehran Times · Sep 5–7"],["ref","The referee says","4.3 ships a day, 7% of January (IMF PortWatch to Aug 30). Reuters: ~10 commodity ships/day over the last 10 days, lowest since May. Brent $97.","physical data · Sep 7"]],
  weak:[
   ["Sep 1","Anadolu · US official","west","US Navy escorted 40 merchant ships / 18M barrels through Hormuz in one day — a wartime high. Escorts are a live policy, not a plan.",8,"US: squeeze & hold · door reopens under guns","▲ new",["gulf","ir"]],
-  ["Sep 5","Iran International (Saudi-linked opposition)","gulf","Tehran raised domestic fuel prices — the regime is passing war costs to the street.",7,"Iran pressure ↑ · regime security","▲",["ir"]],
   ["Sep 5","Anadolu · Tasnim","ir","Iran claims new naval mines laid in the strait; US says it removed ~80 since April. A mine race under escorted convoys.",7,"Bigger war · US–IRGC collision","▲",["west"]],
   ["Sep 5–6","SCMP · Daily Sabah","other","Iran struck a US naval drone near Hormuz — first hit on a US naval asset of the war.",6,"Bigger war","▲ new",[]],
   ["Sep 6","Tehran Times · Rezaei","ir","'For the first time we tested our anti-ship missile above an American warship … they fled.' Capability claim, unverified.",5,"Iran: make Trump pay · deterrence theatre","▲ new",[]],
   ["Sep 7","Press TV · Tehran Times","ir","Iran warns South Korea against deploying to the Gulf — implies an allied escort coalition is forming.",6,"US: coalition escorts · Frozen","▲ new",["west"]],
   ["Sep 7","Gulf News · Ghalibaf","gulf","'The era of proportional responses has ended' — parliament speaker, not IRGC. Political class aligning with hardliners.",6,"Iran: widen or pay","▲",["ir"]],
-  ["Sep 7","Iran Intl liveblog · Aramco","gulf","Saudi Aramco's Jizan facilities attacked Monday (Red Sea side) — horizontal escalation via Yemen.",6,"Iran: widen the war · Houthis","▲ new",["west"]],
+  ["Sep 7","Al Arabiya · Aramco statement","gulf","Saudi Aramco's Jizan facilities attacked Monday (Red Sea side) — horizontal escalation via Yemen.",6,"Iran: widen the war · Houthis","▲ new",["west"]],
   ["Sep 7","The National · Al-Monitor","gulf","Iran and Oman 'agreed' a Hormuz corridor; details unpublished; market 40% signed by Oct 31.",7,"Iran: deal via Oman · GCC boiling → Deal","▲",["ir","west"]],
   ["Sep 6","Gulf News","gulf","US diesel price hits a new high — the second pump number, hitting trucking and food before Nov 3.",6,"US pressure ↑ · gas politics","▲",["west"]],
   ["Sep 7","Tehran Times (Dennis Ross op-ed)","ir","Iranian state media amplifying a Western analyst: 'Iran's resilience continues to surprise.' Narrative of endurance, aimed at domestic audience.",3,"Iran: make Trump pay · morale","—",[]],
-  ["Aug 20","Reuters via Iran Intl","west","Hormuz traffic ~10/day, lowest since May, while talks deadlocked — the market's 77% 'pause' bet hasn't shown up in ships yet.",5,"Frozen","—",["gulf"]]
+  ["Aug 20","Reuters","west","Hormuz traffic ~10/day, lowest since May, while talks deadlocked — the market's 77% 'pause' bet hasn't shown up in ships yet.",5,"Frozen","—",["gulf"]]
  ],
  events:{"09-01":"clashes resume","09-04":"Kuwait hit","09-05":"carrier fired on · 3 tankers sunk","09-06":"IRGC claims 3 tankers","08-27":"no event · normal noise"},
  daily:{ships:[["08-25",4],["08-26",5],["08-27",2],["08-28",7],["08-29",3],["08-30",6],["08-31",null],["09-01",null],["09-02",null],["09-03",null],["09-04",null],["09-05",null],["09-06",null],["09-07",null]],inc:{"09-02":1,"09-04":1,"09-05":3,"09-06":1},sort:{"09-06":5,"09-07":2}}
@@ -381,6 +406,7 @@ function story(){const pI=post3(D.iran),pU=post3(D.us);const top=(hh,post)=>hh.m
  $("story").innerHTML=`<div class="s hotb"><div class="k">Where we are</div><div class="h hot">${boiling.length===D.pots.length?"Everyone is at the boiling point.":boiling.map(b=>b.split(' — ')[0]).join(", ")+" boiling."}</div><p>${D.pots.map(p=>`${esc(p.n.split(' — ')[0].replace('United States','US'))} <b>${p.P}</b>`).join(', ')} on a 10-scale, by our score. ${boiling.length===D.pots.length?'All past their lines':boiling.length+' of '+D.pots.length+' past their lines'} (${D.pots.map(p=>p.t).join(" / ")}). Past the line, sides act against their own interest: Iran fired at a carrier; the US sank tankers eight weeks before an election.</p></div>
  <div class="s blue"><div class="k">Why</div><div class="h">The door is shut and the bill is due.</div><ul><li>Hormuz: <b>${Math.round(D.door.now)} ships a day</b>, was 60.</li><li>US gas <b>$4.15</b> (record Sept) · election in <b>57 days</b>.</li><li>Iran exports <b>−80%</b> · rial 226,700.</li><li>Qatar's economy <b>−15%</b> · Kuwait struck Sep 4.</li><li>Central banks sold <b>$233B</b> of US debt since Feb.</li></ul></div>
  <div class="s green"><div class="k">Next 14 days — our call</div><div class="h">${esc(ti[0][0])} <span style="color:var(--hot)">${ti[0][1]}%</span></div><p><b>Iran</b> — then ${esc(ti[1][0].toLowerCase())} ${ti[1][1]}%. Off-ramp: Oman corridor ${ti.find(r=>r[2])?ti.find(r=>r[2])[1]:"—"}%.</p><p style="margin-top:8px"><b>US</b> — ${esc(tu[0][0].toLowerCase())} <b>${tu[0][1]}%</b>, then ${esc(tu[1][0].toLowerCase())} ${tu[1][1]}%.</p><p style="margin-top:8px">Next 60 days: <b>grind on ${D.forecast.scen[0].p}%</b> · Oman deal ${D.forecast.scen[1].p}% · Iran raids Bahrain ${D.forecast.scen[2].p}%.</p></div>`;}
+function ticker(){const H=D.headlines;if(!H||!$("ticker"))return;const items=H.items||[];const chip=t=>`<span class="tg ${t}">${t==='war'?'WAR':t==='econ'?'ECONOMY':'SIGNAL'}</span>`;$("tkTime").textContent="updated "+esc(H.updated||"");const run=items.map(i=>`<span>${chip(i[0])}${esc(i[1])} <span style="color:var(--ink3);font-family:IBM Plex Mono,monospace;font-size:12.5px">${esc(i[2])}</span></span>`).join('');$("tkRun").innerHTML=run+run;const top=['war','econ','signal'].map(t=>items.find(i=>i[0]===t)).filter(Boolean);$("tkList").innerHTML=top.map(i=>`<div class="it">${chip(i[0])}${esc(i[1])}<small>${esc(i[2])}</small></div>`).join('');}
 function wants(){if(!$("wants"))return;$("wants").innerHTML=D.wants.map(w=>`<div class="w" style="border-top-color:var(--${w.col})"><div class="k">${esc(w.who).toUpperCase()} · ${esc(w.tag)}</div><div class="h">${esc(w.want)}</div><p>${esc(w.line)}</p><p><b>Tell:</b> ${esc(w.tell)}</p></div>`).join('');}
 function backtest(){return D.pots.map(p=>{const acts=p.hist.filter(r=>r[2]===1).map(r=>r[1]),holds=p.hist.filter(r=>r[2]!==1).map(r=>r[1]);const lo=Math.max(...holds.filter(v=>v<Math.min(...acts)).concat([0])),hi=Math.min(...acts);const fit=((lo+hi)/2).toFixed(1);const miss=holds.filter(v=>v>=p.t).length;return `${esc(p.n.split(" — ")[0])}: acted at ${acts.join(", ")} · held at ≤${lo} → fitted line ${lo}–${hi} (mid ${fit}); we use ${p.t}${miss?` · ${miss} day(s) above the line with no act`:""}`;}).join("<br>");}
 function layer(){const m=D.method;if(!m)return;const pt=m.tiles.find(t=>t.id==="potsTS");if(pt){pt.extra="<br><b>Backtest of the lines:</b><br>"+backtest();}const B={MEASURED:'M',DERIVED:'D',JUDGMENT:'J'};
@@ -389,7 +415,7 @@ function layer(){const m=D.method;if(!m)return;const pt=m.tiles.find(t=>t.id==="
  document.querySelectorAll('.hk').forEach(el=>{el.onclick=()=>{const b=$('hk-'+el.getAttribute('data-hk'));if(b)b.hidden=!b.hidden;};});
  document.querySelectorAll('.sec').forEach(sec=>{const n=sec.querySelector('b').textContent.trim();const s=m.sowhat&&m.sowhat[n];if(!s)return;let sw=sec.nextElementSibling;if(!sw||!sw.classList.contains('sowhat'))return;let tr=sw.nextElementSibling;if(tr&&tr.classList.contains('trade')){tr.innerHTML=`<b>IF YOU TRADE THIS</b> ${esc(s.trade)}`;}else{sw.insertAdjacentHTML('afterend',`<div class="trade"><b>IF YOU TRADE THIS</b> ${esc(s.trade)}</div>`);}});}
 function scorecard(){const s=D.scorecard;if(!s)return '';const sm=s.summary||{};const graded=sm.graded||0;return `<div class="s blue"><div class="k">Track record</div><div class="h">${graded?`${sm.hits}/${graded} hits · Brier ${(sm.brier_mean??0).toFixed(2)}`:`${sm.calls||1} call frozen`}</div><p>Every morning the model's 14-day calls are frozen. Fourteen days later they are graded: <b>hit</b> = the top move happened; <b>Brier</b> = how sharp the odds were (0 perfect, 0.5 coin-flip). ${graded?'':'First grade <b>'+esc(sm.first_grade||'2026-09-21')+'</b>.'}</p></div>`;}
-function render(){story();wants();
+function render(){story();ticker();wants();
 const start=new Date(D.warStart+"T00:00:00Z"),asof=new Date(D.asOf+"T00:00:00Z");$("day").textContent=Math.round((asof-start)/864e5)+1;$("asof").textContent=D.asOf;$("next").textContent=D.next;
 shipsChart();official();$("shipsN").textContent=Math.round(D.door.now);$("shipsPct").textContent=Math.round(100*D.door.now/D.door.jan)+"%";
 pie("cargopie",D.cargo,["var(--hot)","var(--chart2)"],"legCargo");pie("whosepie",D.whose,["var(--hot)","var(--warm)","var(--ink3)","var(--cool)"],"legWhose");quiet();yieldline();
@@ -404,7 +430,7 @@ nextMoves("nmIran",D.iran,"nmIranCap","Iran's");nextMoves("nmUS",D.us,"nmUSCap",
 pie("pieEnd",D.ends,["var(--chart)","var(--cool)","var(--warm)","var(--hot)","var(--air)","var(--ink3)"],"legEnd");
 compass();winlose();potsTS();airTS();endsTS();bondsTS();diverge("sellers",D.sellers,"B",300,30);diverge("hurt",D.hurt,"",300,5);pie("pieEar",D.ear,COLS,"legEar");geo();map();daily();
 narr();weak();
-$("src").innerHTML=`Sources: IMF PortWatch · AAA · Bonbast · Trading Economics · FRED · Polymarket · FutureSearch · IMF via Stimson · AGBI · CNBC · Bank of Israel · adsb.lol · IranWarLive · Al Jazeera · Tehran Times · Iran International · Wikipedia. Plan odds, next-move odds, winner/loser scores and "who's in Trump's ear" are model outputs and analyst judgments anchored to those sources. Estimates, not advice.`;
+$("src").innerHTML=`Sources: IMF PortWatch · AAA · Bonbast · Trading Economics · FRED · Polymarket · FutureSearch · IMF via Stimson · AGBI · CNBC · Bank of Israel · adsb.lol · IranWarLive · Al Jazeera · Tehran Times · Wikipedia. Plan odds, next-move odds, winner/loser scores and "who's in Trump's ear" are model outputs and analyst judgments anchored to those sources. Estimates, not advice.`;
 }
 render();layer();
 (async()=>{try{
