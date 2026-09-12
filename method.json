@@ -7,11 +7,11 @@
  },
  "sowhat": {
   "1": {
-   "plain": "All four sides are past the 80° valve (83° · 84° · 84° · 84°): the Saudi–UAE pot warms two degrees as Riyadh confirms the East-West pipeline was hit with injuries; the Small Gulf is on the last day of its Sep 4 Kuwait window and drops below the valve tomorrow without a new hit; nobody is near 100° (capitulation).",
+   "plain": "All four sides are past the 80° valve (83° · 84° · 84° · 84°) and none moved overnight — weekend, no print, no new act; the Small Gulf is on the last day of its Sep 4 Kuwait window and drops below the valve at 07:00 without a new hit (that crossing is held for Sam); nobody is near 100° (capitulation).",
    "trade": "Brent bid but fading on the Oman track; 30-yr yield bid; Polymarket 'Iran–Oman agreement by Sep 30' at 30% is the line to watch into Monday."
   },
   "2": {
-   "plain": "The door is shut, and now the bypass too: 3 big ships a day on PortWatch (week to Sep 6); Kpler counted 7 transits Thursday, none crude; Sep 10 closed 13 in / 11 out of all sizes on AIS, Friday to 21:32 UTC 10 in / 18 out, 70 ships loitering; the East-West pipeline to Yanbu is stopped 'as a precaution'.",
+   "plain": "The door is shut, and the bypass too: 3 big ships a day on PortWatch (week to Sep 6); Kpler counted 7 transits Thursday, none crude; Friday closed 11 in / 18 out of all sizes on AIS — the fortnight's highest outbound day — with 26 ships in the strait at 01:32 UTC; the East-West pipeline to Yanbu is still stopped 'as a precaution'.",
    "trade": "Each week under 10 transits/day has lifted Brent; creditor selling steepens the curve."
   },
   "3": {
@@ -19,7 +19,7 @@
    "trade": "A carrier inside the ring is the tell for a wider war."
   },
   "4": {
-   "plain": "One new act awaits Sam's tick: Riyadh confirms drones from Iraq hit the East-West pipeline on Thursday morning (shut, injuries) — a Gulf energy hit by an Iranian proxy, rung 7 by the rules; the Khasab vessels (rung 5) are still unnamed 51 hours on; the Houthis hold every island in Bab al-Mandeb and vow to keep hitting Saudi 'economic arteries'.",
+   "plain": "One act awaits Sam's tick and got firmer overnight: Baghdad confirms the drones that hit the East-West pipeline flew from Maysan and has sacked the commander there (Riyadh confirmed the hit Friday) — a Gulf energy hit by an Iranian proxy, rung 7 by the rules; Tehran has said nothing in 34 hours; the Khasab vessels (rung 5) are unnamed 55 hours on; the Houthis hold the whole Yemeni Red Sea coast.",
    "trade": "A confirmed pipeline hit is the rung-7 print that re-prices Brent; watch for a rung-9 act (a US warship actually hit) or the first rung-10 act since February."
   },
   "5": {
@@ -51,7 +51,7 @@
    "trade": "Bigger-war above 30% is the level to hedge with long-dated Brent calls; Signed deal above 20% is the level for Brent < $85."
   },
   "12": {
-   "plain": "Weak signals: Tehran's first word on the pipeline accusation, a militia claim, whether Petroline restarts and whether Riyadh still sits at Monday's Oman table (six GCC states, Iraq, Iran — who confirms, the lane map, whether Washington blesses or dismisses it), the Khasab identities, the IRGC drone-boat claim, a Saudi ship hit at Bab al-Mandeb, Wednesday's Fed, Bessent's Monday bank, the Sep 26 panel fight, Pickaxe.",
+   "plain": "Weak signals: Tehran's first word on Maysan (deny, deflect, or silence into Monday), a militia claim, whether Petroline restarts and whether Riyadh, Baghdad and Tehran all sit at Monday's Oman table (the lane map, whether Washington blesses or dismisses it), IRGC officers in Yemen and a Saudi ship hit at Bab al-Mandeb, the Khasab identities, the IRGC drone-boat claim, Monday's oil open, Wednesday's Fed, the Sep 26 panel fight, Pickaxe.",
    "trade": "None until confirmed."
   }
  },
@@ -194,7 +194,7 @@
   {
    "badge": "MEASURED",
    "counter": "AIS shows only ships that broadcast — dark tankers and most warships are invisible; ADS-B shows only aircraft with transponders on — military aircraft over Iran do not broadcast, so an empty sky is 'not seen', not 'not there'. Dead-reckoned positions are extrapolations, not fixes. Thermal anomalies cannot say what burned or who lit it",
-   "date": "Sep 11 · 22:01 UTC",
+   "date": "Sep 12 · 02:01 UTC",
    "id": "map",
    "source": "Live layer: every AIS commercial ship from hormuz.data-tracking.net /api/ships (MarineTraffic feeds, 30-min polls) and every ADS-B aircraft from adsb.lol (four 250-nm circles) — rebuilt every 10 minutes by a GitHub Action (live.json) and, between fixes, moved along last course and speed (dead reckoning, ≤20 min). Basemap: NASA VIIRS true colour via GIBS, newest complete pass (date on the toggle). Fire dots: VIIRS 375 m thermal anomalies, last 48 h (flares are normal; a new dot at a port, refinery or base is the signal). US warship positions: USNI Fleet & Marine Tracker (weekly, Monday) — the tracker names the sea, the point inside it is ours (JUDGMENT); roster as of Sep 8: George Washington + George H.W. Bush CSGs and the Boxer ARG in the Arabian Sea, Lincoln departed for Thailand Sep 2 · Satellite checks (S badges): Sentinel-2 via GIBS, 30 m, latest cloud-free pass per site, vessel counts at pier/anchor are our reading (JUDGMENT)"
   },
@@ -227,7 +227,7 @@
   {
    "badge": "MEASURED",
    "counter": "AIS counts miss dark transits (transponders off) and over-count small craft; PortWatch is the cleaner commercial series but a week late — read the two together",
-   "date": "2026-09-10",
+   "date": "2026-09-11",
    "id": "daily",
    "source": "In/out crossings: hormuz.data-tracking.net /api/crossings/daily (AIS via MarineTraffic feeds, polled every 30 min, all vessel sizes incl. dhows and service craft). Grey dot: IMF PortWatch commercial total (≈7-day lag). Incidents: iranwarlive + CENTCOM + Gulf media. Aircraft: adsb.lol.",
    "trade": "a sustained rise in outbound tankers (green) before PortWatch confirms it is the earliest 'door opening' signal"
