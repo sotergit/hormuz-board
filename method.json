@@ -1,5 +1,5 @@
 {
- "asOf": "2026-09-11",
+ "asOf": "2026-09-12",
  "badges": {
   "DERIVED": "computed from measured inputs by a stated formula",
   "JUDGMENT": "our read, rule-driven from feeds since 2026-09-07",
@@ -7,11 +7,11 @@
  },
  "sowhat": {
   "1": {
-   "plain": "All four sides are past the 80° valve (83° · 84° · 84° · 84°) and none moved overnight — weekend, no print, no new act (the rial eased 200 at Saturday's open); the Small Gulf is on the last day of its Sep 4 Kuwait window and drops below the valve at 07:00 without a new hit (that crossing is held for Sam); nobody is near 100° (capitulation).",
+   "plain": "Three sides sit past the 80° valve and did not move overnight — Iran 83°, US 84°, Saudi–UAE 84° (weekend, no print; the rial firmed 1,300). The Small Gulf's mechanical score fell to 70° (6.1) because its Sep 4 Kuwait hit aged out of the 7-day window — whether that counts as the pot cooling below the valve is held for Sam's tick under the approval gate. Nobody is near 100° (capitulation).",
    "trade": "Brent bid but fading on the Oman track; 30-yr yield bid; Polymarket 'Iran–Oman agreement by Sep 30' at 30% is the line to watch into Monday."
   },
   "2": {
-   "plain": "The door is shut, and the bypass too: 3 big ships a day on PortWatch (week to Sep 6); 11 in / 18 out of all sizes on AIS in the 24 h to 05:54 UTC Saturday with 29 ships in the strait and no tanker-class crossing; the East-West pipeline to Yanbu is still stopped 'as a precaution' and Iraq has shut its Shalamcheh crossing with Iran.",
+   "plain": "The door is shut, the bypass too: 3 big ships a day on PortWatch (week to Sep 6); 10 in / 19 out of all sizes on AIS in the 24 h to 09:44 UTC Saturday with 27 ships in the strait — and one VLCC-class hull went out, the largest crossing in a week; the East-West pipeline to Yanbu is still stopped 'as a precaution', Iraq has shut both Shalamcheh and Chazabeh, and the FT says US air cover for tankers on the Omani lane is down to two time slots a day.",
    "trade": "Each week under 10 transits/day has lifted Brent; creditor selling steepens the curve."
   },
   "3": {
@@ -19,7 +19,7 @@
    "trade": "A carrier inside the ring is the tell for a wider war."
   },
   "4": {
-   "plain": "One act awaits Sam's tick and got firmer twice in eight hours: Riyadh confirmed the East-West pipeline hit (Friday), Baghdad named Maysan and sacked the commander there, and Baghdad has now shut the Shalamcheh crossing with Iran and launched a 'wide-scale operation' — a Gulf energy hit by an Iranian proxy, rung 7 by the rules; Tehran's wire restarted Saturday and still says nothing about it; the Khasab vessels (rung 5) are unnamed 59 hours on; the Houthis hold the whole Yemeni Red Sea coast.",
+   "plain": "One act awaits Sam's tick and got firmer a third time: Riyadh confirmed the East-West pipeline hit, Baghdad named Maysan, sacked the commander and has now shut two crossings with Iran, the whole Gulf lined up behind Riyadh, and Trump said Iran is 'probably' responsible — a Gulf energy hit by an Iranian proxy, rung 7 by the rules; Tehran's wire still says nothing about it; the Khasab vessels (rung 5) are unnamed 63 hours on; Yemen's government has started its own air strikes at Mocha.",
    "trade": "A confirmed pipeline hit is the rung-7 print that re-prices Brent; watch for a rung-9 act (a US warship actually hit) or the first rung-10 act since February."
   },
   "5": {
@@ -51,7 +51,7 @@
    "trade": "Bigger-war above 30% is the level to hedge with long-dated Brent calls; Signed deal above 20% is the level for Brent < $85."
   },
   "12": {
-   "plain": "Weak signals: Tehran's first word on Iraq (deny, deflect, or silence into Monday), a militia claim or arrests from Baghdad's 'wide-scale operation', whether Petroline restarts and whether Riyadh, Baghdad and Tehran all sit at Monday's Oman table (the lane map, whether Washington blesses or dismisses it), IRGC officers in Yemen and a Saudi ship hit at Bab al-Mandeb, the Khasab identities, Eslami's week in Vienna, Monday's oil open, Wednesday's Fed, the Sep 26 panel fight, Pickaxe.",
+   "plain": "Weak signals: whether Monday in Muscat is a signing (Pezeshkian) or a meeting (Baghaei) and who turns up — Riyadh, Abu Dhabi, Doha, Kuwait, Baghdad; whether Washington blesses or dismisses it after 'probably, they are' and 'right after the mid-terms'; a militia name or arrests from Baghdad; Tehran's first word on the pipeline; Petroline; the Sharurah alert; the Khasab identities; the WSJ China-imagery story before Trump–Xi Sep 24; Monday's oil open; Wednesday's Fed; the Sep 26 panel fight; Pickaxe.",
    "trade": "None until confirmed."
   }
  },
@@ -59,7 +59,7 @@
   {
    "badge": "JUDGMENT",
    "counter": "one scale for every pot: 100° = boils over (a side gives up its aim); 80° = the emergency valve, past which a side is forced to escalate and acts against its own interest. Underneath, every pot shares one trigger on the 0–10 score — 7.0, the valve (re-fit monthly, the same for all four); the display maps 7.0 to 80° and 10 to 100°, so a degree means the same thing in every pot and the gap from 80° to 100° is a side's remaining tolerance",
-   "date": "2026-09-11",
+   "date": "2026-09-12",
    "id": "potsTS",
    "moves": "a strike on US forces, a tanker seizure, a talks contact, gas above $4.30 or below $3.80",
    "source": "rules/latest pots components",
@@ -68,7 +68,7 @@
   {
    "badge": "DERIVED",
    "counter": "occurrence table is hand-set; several moves can co-occur so bars don't sum to 100",
-   "date": "2026-09-11",
+   "date": "2026-09-12",
    "id": "nextMoves",
    "moves": "each logged signal reweights the race",
    "source": "hypothesis posteriors × per-plan 14-day occurrence table (independent moves)",
@@ -77,7 +77,7 @@
   {
    "badge": "DERIVED",
    "counter": "four hypotheses are not exhaustive; 'Force escalation early' carries a raised prior by Sam's judgment (2026-09-07)",
-   "date": "2026-09-11",
+   "date": "2026-09-12",
    "id": "races",
    "moves": "any signal from the rule table",
    "source": "Bayesian race over last 10 signals, likelihoods shrunk ^0.7; Iran has four plans incl. 'Wait for Nov 3'"
@@ -109,7 +109,7 @@
   },
   {
    "badge": "MEASURED",
-   "date": "2026-09-11",
+   "date": "2026-09-12",
    "id": "quiet",
    "source": "FRED: GASREGM, DGS10, DTWEXBGS; Bonbast rial"
   },
@@ -162,7 +162,7 @@
   {
    "badge": "DERIVED",
    "counter": "definitions: Stuck = no signed deal, no regime change, door under 30 ships/day, fighting continues; Signed deal = a signed US–Iran agreement (not an MOU, not a pause); Regime change = any leadership change in Tehran, including an IRGC takeover or Khamenei succession; Bigger war = US or Israeli strikes on Iranian territory sustained over a week, or a Gulf-wide exchange, or US ground forces engaged; Strait regime = passage resumes ≥30 ships/day under Iran–Oman rules or fees, no war, no signed deal; Other = anything else (Houthi Red Sea closure, US unilateral pause, etc.)",
-   "date": "2026-09-11",
+   "date": "2026-09-12",
    "id": "endsTS",
    "source": "transfer rule from pots to five endings (rules/latest.endings)",
    "trade": "'Deal' above 25% has matched Brent < $90; 'Bigger war' above 30% has not yet occurred"
@@ -194,20 +194,20 @@
   {
    "badge": "MEASURED",
    "counter": "AIS shows only ships that broadcast — dark tankers and most warships are invisible; ADS-B shows only aircraft with transponders on — military aircraft over Iran do not broadcast, so an empty sky is 'not seen', not 'not there'. Dead-reckoned positions are extrapolations, not fixes. Thermal anomalies cannot say what burned or who lit it",
-   "date": "Sep 12 · 06:00 UTC",
+   "date": "Sep 12 · 10:00 UTC",
    "id": "map",
    "source": "Live layer: every AIS commercial ship from hormuz.data-tracking.net /api/ships (MarineTraffic feeds, 30-min polls) and every ADS-B aircraft from adsb.lol (four 250-nm circles) — rebuilt every 10 minutes by a GitHub Action (live.json) and, between fixes, moved along last course and speed (dead reckoning, ≤20 min). Basemap: NASA VIIRS true colour via GIBS, newest complete pass (date on the toggle). Fire dots: VIIRS 375 m thermal anomalies, last 48 h (flares are normal; a new dot at a port, refinery or base is the signal). US warship positions: USNI Fleet & Marine Tracker (weekly, Monday) — the tracker names the sea, the point inside it is ours (JUDGMENT); roster as of Sep 8: George Washington + George H.W. Bush CSGs and the Boxer ARG in the Arabian Sea, Lincoln departed for Thailand Sep 2 · Satellite checks (S badges): Sentinel-2 via GIBS, 30 m, latest cloud-free pass per site, vessel counts at pier/anchor are our reading (JUDGMENT)"
   },
   {
    "badge": "MEASURED",
    "counter": "military aircraft over Iran do not broadcast; zero means 'not seen', not 'not there'",
-   "date": "2026-09-11",
+   "date": "2026-09-12",
    "id": "airTS",
    "source": "adsb.lol /v2/mil and /v2/point"
   },
   {
    "badge": "JUDGMENT",
-   "date": "2026-09-11",
+   "date": "2026-09-12",
    "id": "narr",
    "source": "daily 3-region media sweep; internal 30/70 weighting"
   },
@@ -244,7 +244,7 @@
   {
    "badge": "DERIVED",
    "counter": "pairing is a judgment: we match the first clearly responsive act by the other side; unanswered acts are not shown",
-   "date": "2026-09-11",
+   "date": "2026-09-12",
    "id": "tft",
    "source": "pairs of act→reply between Iran and the US from the ladder events; days counted from the act"
   },
