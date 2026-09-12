@@ -74,6 +74,24 @@ footer{margin-top:36px;padding-top:12px;border-top:1px solid var(--line);font-si
 <div class="row" style="grid-template-columns:repeat(4,minmax(0,1fr))" id="pots"></div>
 <div class="row" style="grid-template-columns:1fr"><div class="tile"><h2>Where the war is walking — and where it is heading</h2><svg id="compass" viewBox="0 0 1120 560"></svg><div class="one" id="compassCap"></div></div></div>
 <div class="story" id="story"></div>
+<!-- V4 LEARNING CORE — rendered by v4() from v4.json (GitHub) ; runs beside the v3 rules until the switch -->
+<div class="sec" id="v4sec" hidden><b>β</b><span style="white-space:nowrap">The learning core</span> <span style="font-size:15px;font-weight:500;color:var(--ink3);font-family:IBM Plex Sans,sans-serif;letter-spacing:0;margin-left:4px">model v4 — Bayesian hypothesis test &amp; update, running beside the rules · <span id="v4meta"></span></span></div>
+<div id="v4wrap" hidden>
+<div class="sowhat" id="v4point"></div>
+<div class="row r2">
+  <div class="tile"><h2>Which plan is each side on? — posterior, with the prior and the evidence</h2><svg id="v4plans" viewBox="0 0 760 330"></svg><div class="one">Bar = posterior after every confirmed event since Feb 28 (particle filter). Whisker = spread across filter seeds. Grey tick = Sam's prior. <b>log BF</b> = how far the evidence moved the odds from the prior (+ up, − down). <span id="v4bfnote"></span></div></div>
+  <div class="tile"><h2>What the data has taught the model</h2><div id="v4learn"></div><svg id="v4surprise" viewBox="0 0 560 150"></svg><div class="one" id="v4surpCap"></div></div>
+</div>
+<div class="row r2">
+  <div class="tile"><h2>Next 14 days — one engine, with bands</h2><svg id="v4moves" viewBox="0 0 760 440"></svg><div class="one">Probability each move happens at least once in 14 days, from 8,000 simulated runs (40 parameter draws × 200 runs). Band = 80 % across draws — it is <b>wide where the data is thin</b>. Grey tick = the v3 rules' number.</div></div>
+  <div class="tile"><h2>Sixty days and the endings — counts of simulated runs</h2><svg id="v4paths" viewBox="0 0 760 440"></svg><div class="one">Same runs, classified by where they went: <b>to Nov 3</b> (top) and at day 120 (bottom). No hand nudges, no transfer rule — the consistency between paths and endings holds by construction. Grey tick = v3.</div></div>
+</div>
+<div class="row r2">
+  <div class="tile"><h2>What to look at next — the active-learning queue</h2><div id="v4queue"></div><div class="one">Expected information gain (bits) about the 60-day path odds if the signal is seen or not seen tomorrow. The capture job spends its sweep at the top of this list; Sam's standing watch items are always observed regardless.</div></div>
+  <div class="tile"><h2>Hypotheses under test — and the dates they must clear</h2><div id="v4tests"></div></div>
+</div>
+</div>
+
 
 <div class="sec"><b>1</b>The pressure — how the pots got here, and four paths to the election</div>
 <div class="sowhat" id="sowhat1"><b>The point:</b> all four valves are open at once. Past the valve a side is forced to escalate; 100° is boiling over.</div>
@@ -558,6 +576,48 @@ function layer(){const m=D.method;if(!m)return;const pt=m.tiles.find(t=>t.id==="
  document.querySelectorAll('.hk').forEach(el=>{el.onclick=()=>{const b=$('hk-'+el.getAttribute('data-hk'));if(b)b.hidden=!b.hidden;};});
  document.querySelectorAll('.sec').forEach(sec=>{const n=sec.querySelector('b').textContent.trim();const s=m.sowhat&&m.sowhat[n];if(!s)return;let sw=sec.nextElementSibling;if(!sw||!sw.classList.contains('sowhat'))return;let tr=sw.nextElementSibling;if(tr&&tr.classList.contains('trade')){tr.innerHTML=`<b>IF YOU TRADE THIS</b> ${esc(s.trade)}`;}else{sw.insertAdjacentHTML('afterend',`<div class="trade"><b>IF YOU TRADE THIS</b> ${esc(s.trade)}</div>`);}});}
 function scorecard(){const s=D.scorecard;if(!s)return '';const sm=s.summary||{};const graded=sm.graded||0;return `<div class="s blue"><div class="k">Track record</div><div class="h">${graded?`${sm.hits}/${graded} hits · Brier ${(sm.brier_mean??0).toFixed(2)}`:`${sm.calls||1} call frozen`}</div><p>Every morning the model's 14-day calls are frozen. Fourteen days later they are graded: <b>hit</b> = the top move happened; <b>Brier</b> = how sharp the odds were (0 perfect, 0.5 coin-flip). ${graded?'':'First grade <b>'+esc(sm.first_grade||'2026-09-21')+'</b>.'}</p></div>`;}
+// V4 LEARNING CORE renderer — reads D.v4 (v4.json). Safe to call repeatedly.
+function v4(){const V=D.v4;if(!V||!V.plans||!$("v4sec"))return;$("v4sec").hidden=false;$("v4wrap").hidden=false;
+ const pc=v=>Math.round(100*v),bar=(x,y,w,h,c,op)=>`<rect x="${x}" y="${y}" width="${Math.max(0,w)}" height="${h}" fill="${c}"${op?` opacity="${op}"`:''}/>`;
+ $("v4meta").textContent=`as of ${V.asOf} · ${V.ledger_events} ledger events · ${V.particles.toLocaleString()} particles · ${V.sims.toLocaleString()} runs`;
+ // ---- plans
+ {const W=760,H=330,L=250,R=150;let g='',y=8;const blocks=[["IRAN",V.plans.iran,"var(--hot)"],["UNITED STATES",V.plans.us,"var(--chart)"]];
+  blocks.forEach(([t,p,c])=>{g+=`<text x="${L}" y="${y+12}" font-size="12.5" letter-spacing=".12em" fill="var(--ink3)" ${M}>${t}</text>`;y+=20;
+   p.names.forEach((n,i)=>{const rh=30,w=(W-L-R)*p.post[i],w0=(W-L-R)*p.prior[i],b0=(W-L-R)*p.band[i][0],b1=(W-L-R)*p.band[i][1];
+    g+=`<text x="${L-10}" y="${y+19}" font-size="13.5" text-anchor="end" fill="var(--ink)" font-weight="600" ${F}>${esc(n)}</text>`+bar(L,y+6,w,18,c)+`<line x1="${L+b0}" x2="${L+b1}" y1="${y+15}" y2="${y+15}" stroke="var(--ink)" stroke-width="2"/><line x1="${L+w0}" x2="${L+w0}" y1="${y+2}" y2="${y+28}" stroke="var(--ink3)" stroke-width="2"/>`+
+    `<text x="${L+Math.max(w,b1)+8}" y="${y+19}" font-size="14" font-weight="800" fill="var(--ink)" ${M}>${pc(p.post[i])}%</text><text x="${W}" y="${y+19}" font-size="12.5" text-anchor="end" fill="${p.log_bf[i]>0?'var(--cool)':'var(--ink3)'}" font-weight="700" ${M}>log BF ${p.log_bf[i]>0?'+':''}${p.log_bf[i]}</text>`;y+=rh;});y+=10;});
+  $("v4plans").innerHTML=g;const v3=V.v3_for_comparison;if(v3)$("v4bfnote").innerHTML=`v3 rules today: Iran ${v3.post_iran.map(pc).join(' / ')} · US ${v3.post_us.map(pc).join(' / ')} — v3 is more certain because it counts each event at every level; v4 counts it once.`;}
+ // ---- learning gauge + surprise
+ {const Lr=V.learning;const kl=[["Iran signal rows",Lr.kl_signals_iran],["US signal rows",Lr.kl_signals_us],["Iran move rates",Lr.kl_moves_iran],["US move rates",Lr.kl_moves_us]];const mx=Math.max(1,...kl.map(k=>k[1]));
+  $("v4learn").innerHTML=`<div style="font:700 12.5px IBM Plex Mono,monospace;letter-spacing:.12em;color:var(--ink3)">LEARNING GAUGE · KL(posterior ‖ prior), nats — 0 = still Sam's priors</div>`+kl.map(k=>`<div style="display:grid;grid-template-columns:140px 1fr 50px;gap:8px;align-items:center;margin:4px 0;font-size:13.5px"><span>${esc(k[0])}</span><span class="meter" style="width:100%"><i style="width:${Math.round(100*k[1]/mx)}%;background:var(--chart)"></i></span><b class="mono">${k[1].toFixed(2)}</b></div>`).join('')+
+   `<div style="font:700 12.5px IBM Plex Mono,monospace;letter-spacing:.12em;color:var(--ink3);margin-top:8px">ROWS THE DATA MOVED MOST · learned ÷ prior</div>`+(Lr.most_moved||[]).map(r=>`<div style="font-size:13px;color:var(--ink2);margin:3px 0"><b style="color:var(--ink)">${esc(r[0])}</b> · ${esc(r[1])}: <span class="mono">×<b>${r[2]}</b></span></div>`).join('');
+  const S=V.surprise,ser=S.series||[],W=560,H=150,L2=36,R2=16,T2=22,B2=26,n=ser.length,vals=ser.map(s=>s[1]),mx2=Math.max(1,...vals),x=i=>L2+(W-L2-R2)*i/Math.max(1,n-1),y=v=>T2+(H-T2-B2)*(1-v/mx2);
+  let g=`<text x="${L2}" y="${T2-8}" font-size="12.5" letter-spacing=".12em" fill="var(--ink3)" ${M}>SURPRISE · −log p(last 7 days | model)</text><line x1="${L2}" x2="${W-R2}" y1="${y(0)}" y2="${y(0)}" stroke="var(--line)"/>`;
+  g+=`<path d="${vals.map((v,i)=>(i?'L':'M')+x(i)+','+y(v)).join(' ')}" fill="none" stroke="${S.flag?'var(--hot)':'var(--warm)'}" stroke-width="2.5"/>`;ser.forEach((s,i)=>{if(i%10===0||i===n-1)g+=`<text x="${x(i)}" y="${H-8}" font-size="11.5" text-anchor="${i===n-1?'end':'middle'}" fill="var(--ink3)" ${M}>${esc(s[0])}</text>`;});
+  g+=`<circle cx="${x(n-1)}" cy="${y(vals[n-1])}" r="5" fill="${S.flag?'var(--hot)':'var(--warm)'}"/><text x="${x(n-1)-8}" y="${y(vals[n-1])-8}" font-size="13" font-weight="800" text-anchor="end" fill="var(--ink)" ${M}>${S.latest} · ${S.percentile}th pct</text>`;$("v4surprise").innerHTML=g;
+  $("v4surpCap").innerHTML=S.flag?`<b class="hot">Flag:</b> the last week is in the top decile of surprise for the whole war — either the war is intensifying faster than any plan predicts, or the hypothesis list is missing one. ${esc(S.note)}`:`Within the model's normal range. ${esc(S.note)}`;}
+ // ---- moves 14d
+ {const W=760,H=440,L=330,R=70;let g='',y=6;const v3I=(D.iran&&D.iran.moves)?(()=>{const p=post3(D.iran);return D.iran.moves.map(m=>Math.round(100*m[1].reduce((a,v,i)=>a+v*p[i],0)));})():null;const v3U=(D.us&&D.us.moves)?(()=>{const p=post3(D.us);return D.us.moves.map(m=>Math.round(100*m[1].reduce((a,v,i)=>a+v*p[i],0)));})():null;
+  [["IRAN",V.moves14.iran,"var(--hot)",v3I],["UNITED STATES",V.moves14.us,"var(--chart)",v3U]].forEach(([t,rows,c,v3])=>{g+=`<text x="${L}" y="${y+12}" font-size="12.5" letter-spacing=".12em" fill="var(--ink3)" ${M}>${t}</text>`;y+=18;
+   rows.forEach((r,i)=>{const rh=27,sc=(W-L-R)/100,w=r[1]*sc,deal=/\(deal\)/.test(r[0]);g+=`<text x="${L-10}" y="${y+17}" font-size="12.5" text-anchor="end" fill="var(--ink)" font-weight="600" ${F}>${esc(r[0].replace(' (deal)','').slice(0,44))}</text>`+bar(L,y+5,w,16,deal?'var(--cool)':c)+`<line x1="${L+r[2][0]*sc}" x2="${L+r[2][1]*sc}" y1="${y+13}" y2="${y+13}" stroke="var(--ink)" stroke-width="2"/>`+(v3&&v3[i]!=null?`<line x1="${L+v3[i]*sc}" x2="${L+v3[i]*sc}" y1="${y+1}" y2="${y+25}" stroke="var(--ink3)" stroke-width="2"/>`:'')+`<text x="${L+Math.max(w,r[2][1]*sc)+6}" y="${y+17}" font-size="13" font-weight="800" fill="var(--ink)" ${M}>${Math.round(r[1])}%</text>`;y+=rh;});y+=8;});
+  $("v4moves").setAttribute('viewBox',`0 0 ${W} ${y}`);$("v4moves").innerHTML=g;}
+ // ---- paths + endings
+ {const W=760,H=440,L=250,R=70,sc=(W-L-R)/100;let g='',y=6;const P=V.paths60,E=V.endings,v3=V.v3_for_comparison||{};const pn={force:"Forced escalation before Nov 3",grind:"Grind on — tanker for tanker",deal:"Oman corridor deal",bahrain:"Iran raids Bahrain",other:"Something else"};const pcol={force:'var(--hot)',grind:'var(--warm)',deal:'var(--cool)',bahrain:'var(--hot)',other:'var(--ink3)'};
+  g+=`<text x="${L}" y="${y+12}" font-size="12.5" letter-spacing=".12em" fill="var(--ink3)" ${M}>SIXTY DAYS · ${esc(P.horizon)}</text>`;y+=18;
+  P.names.forEach((n,i)=>{const rh=27,w=P.p[i]*sc,t=v3.scen?v3.scen[n]:null;g+=`<text x="${L-10}" y="${y+17}" font-size="12.5" text-anchor="end" fill="var(--ink)" font-weight="600" ${F}>${esc(pn[n]||n)}</text>`+bar(L,y+5,w,16,pcol[n])+`<line x1="${L+P.band[i][0]*sc}" x2="${L+P.band[i][1]*sc}" y1="${y+13}" y2="${y+13}" stroke="var(--ink)" stroke-width="2"/>`+(t!=null?`<line x1="${L+t*sc}" x2="${L+t*sc}" y1="${y+1}" y2="${y+25}" stroke="var(--ink3)" stroke-width="2"/>`:'')+`<text x="${L+Math.max(w,P.band[i][1]*sc)+6}" y="${y+17}" font-size="13" font-weight="800" fill="var(--ink)" ${M}>${Math.round(P.p[i])}%</text>`;y+=rh;});y+=10;
+  g+=`<text x="${L}" y="${y+12}" font-size="12.5" letter-spacing=".12em" fill="var(--ink3)" ${M}>ENDINGS · ${esc(E.horizon)}</text>`;y+=18;const ecol={"Stuck":"var(--chart)","Signed deal":"var(--cool)","Regime change":"var(--warm)","Bigger war":"var(--hot)","Strait regime":"var(--air)","Other":"var(--ink3)"};
+  E.names.forEach((n,i)=>{const rh=27,w=E.p[i]*sc,t=v3.ends?v3.ends[n]:null;g+=`<text x="${L-10}" y="${y+17}" font-size="12.5" text-anchor="end" fill="var(--ink)" font-weight="600" ${F}>${esc(n)}</text>`+bar(L,y+5,w,16,ecol[n]||'var(--ink3)')+`<line x1="${L+E.band[i][0]*sc}" x2="${L+E.band[i][1]*sc}" y1="${y+13}" y2="${y+13}" stroke="var(--ink)" stroke-width="2"/>`+(t!=null?`<line x1="${L+t*sc}" x2="${L+t*sc}" y1="${y+1}" y2="${y+25}" stroke="var(--ink3)" stroke-width="2"/>`:'')+`<text x="${L+Math.max(w,E.band[i][1]*sc)+6}" y="${y+17}" font-size="13" font-weight="800" fill="var(--ink)" ${M}>${Math.round(E.p[i])}%</text>`;y+=rh;});
+  $("v4paths").setAttribute('viewBox',`0 0 ${W} ${y+6}`);$("v4paths").innerHTML=g;}
+ // ---- queue
+ {const Q=V.queue;const mx=Math.max(1e-9,...Q.top.map(q=>q.eig_bits));$("v4queue").innerHTML=`<table class="sigt"><thead><tr><th>#</th><th>Signal to look for</th><th>Gain</th><th>P(seen)</th><th>Where to look</th></tr></thead><tbody>`+Q.top.map((q,i)=>`<tr><td class="mono">${i+1}</td><td><span class="own ${q.side==='Iran'?'ir':'west'}">${esc(q.side)}</span> ${esc(q.pattern)}</td><td><span class="meter"><i style="width:${Math.round(100*q.eig_bits/mx)}%;background:var(--chart)"></i></span> <span class="mono">${q.eig_bits.toFixed(4)} b</span></td><td class="mono">${Math.round(100*q.p_obs)}%</td><td style="color:var(--ink2);font-size:13px">${esc(q.look||'')}</td></tr>`).join('')+`</tbody></table><div class="one" style="margin-top:6px"><b>Always observed (Sam's floor):</b> ${Q.floor.map(esc).join(' · ')}</div>`;}
+ // ---- tests
+ {const st=V.structural||[],fz=V.falsifiers||[];let h='';st.forEach(s=>{h+=`<div style="border-left:5px solid var(--warm);padding:6px 12px;margin-bottom:10px"><div style="font:700 12.5px IBM Plex Mono,monospace;letter-spacing:.12em;color:var(--ink3)">STRUCTURAL PAIR · ${esc(s.name)}</div><div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin:6px 0"><div style="font-size:13.5px"><b>H1</b> ${esc(s.h1)}</div><div class="big" style="font-size:30px;color:var(--warm)">${Math.round(100*s.p_h1)}<span style="font-size:14px">% H1</span></div><div style="font-size:13.5px;text-align:right"><b>H2</b> ${esc(s.h2)}</div></div><div style="font-size:12.5px;color:var(--ink2)">log BF ${s.log_bf} after ${s.obs.length} observations: ${s.obs.map(o=>`${esc(o[0].slice(5))} ${esc(o[1].slice(0,48))} (${o[2]>0?'+':''}${o[2]})`).join(' · ')}</div><div style="font-size:12.5px;color:var(--ink3);margin-top:4px"><b>Would separate them:</b> ${s.separating.map(esc).join(' · ')}</div></div>`;});
+  h+=`<div style="font:700 12.5px IBM Plex Mono,monospace;letter-spacing:.12em;color:var(--ink3)">FALSIFIERS · a date and a bar each hypothesis must clear</div><table class="sigt"><thead><tr><th>Hypothesis</th><th>Test</th><th>By</th><th>log BF now</th></tr></thead><tbody>`+fz.map(f=>`<tr><td><b>${esc(f.hypothesis)}</b></td><td style="color:var(--ink2);font-size:13px">${esc(f.test)}</td><td class="mono">${esc(f.date.slice(5))}</td><td class="tr ${f.now>0?'hot':'cool'}">${f.now>0?'+':''}${f.now}</td></tr>`).join('')+`</tbody></table>`;$("v4tests").innerHTML=h;}
+ // ---- the point
+ {const pi=V.plans.iran,pu=V.plans.us,P=V.paths60,top=k=>{let b=0;k.post.forEach((v,i)=>{if(v>k.post[b])b=i;});return b;};const ti=top(pi),tu=top(pu);const fi=P.names.indexOf('force');
+  $("v4point").innerHTML=`<b>The point:</b> after ${V.ledger_events} confirmed events counted once each, the model puts Iran on <b>${esc(pi.names[ti])}</b> at ${pc(pi.post[ti])}% and Washington on <b>${esc(pu.names[tu])}</b> at ${pc(pu.post[tu])}%. Simulated forward, a forced escalation before Nov 3 comes out at <b>${Math.round(P.p[fi])}%</b> (band ${P.band[fi][0]}–${P.band[fi][1]}) against the rules' ${V.v3_for_comparison&&V.v3_for_comparison.scen?V.v3_for_comparison.scen.force:'—'}% — the ledger's own base rate of escalations is higher than the hand-set path odds assumed. The data has moved the priors by ${V.learning.kl_signals_iran.toFixed(2)} nats on Iran's signal rows; the learning gauge says how much is evidence and how much is still Sam.`;}
+}
+
 function render(){story();ticker();ladder();wants();
 const start=new Date(D.warStart+"T00:00:00Z"),asof=new Date(D.asOf+"T00:00:00Z");$("day").textContent=Math.round((asof-start)/864e5)+1;$("asof").textContent=D.asOf;$("next").textContent=D.next;
 shipsChart();official();$("shipsN").textContent=Math.round(D.door.now);$("shipsPct").textContent=Math.round(100*D.door.now/D.door.jan)+"%";
@@ -572,7 +632,7 @@ race("raceIran",D.iran,D.iran.names);race("raceUS",D.us,D.us.names);
 nextMoves("nmIran",D.iran,"nmIranCap","Iran's");nextMoves("nmUS",D.us,"nmUSCap","America's");
 pie("pieEnd",D.ends,["var(--chart)","var(--cool)","var(--warm)","var(--hot)","var(--air)","var(--ink3)"],"legEnd");
 compass();winlose();macro();potsTS();airTS();endsTS();bondsTS();custody();diverge("hurt",D.hurt,"",300,5);pie("pieEar",D.ear,COLS,"legEar");geo();map();daily();
-narr();weak();
+narr();weak();if(D.v4)v4();
 $("src").innerHTML=`Sources: IMF PortWatch · AAA · Bonbast · Trading Economics · FRED · Polymarket · FutureSearch · IMF via Stimson · AGBI · CNBC · Bank of Israel · adsb.lol · IranWarLive · Al Jazeera · Tehran Times · Wikipedia. Plan odds, next-move odds, winner/loser scores and "who's in Trump's ear" are model outputs and analyst judgments anchored to those sources. Estimates, not advice.`;
 }
 render();layer();
@@ -583,6 +643,7 @@ if(typeof fetch==='function'&&typeof document!=='undefined'&&document.hidden!==u
     // public-host mode: read board.json / method.json next to this file (pushed daily by the job)
     try{const r=await fetch("board.json?t="+Date.now());if(r.ok){const d=await r.json();if(d&&d.asOf){Object.assign(D,d);if(window._liveNew&&(!D.live||!D.live.t||window._liveNew.t>D.live.t))D.live=window._liveNew;render();layer();const f=$("feed");f.classList.add("on");f.querySelector("span").textContent="live · "+d.asOf;}}}catch(e){}
     try{const r=await fetch("method.json?t="+Date.now());if(r.ok){const d=await r.json();if(d&&d.asOf){D.method=d;layer();}}}catch(e){}
+    try{const r=await fetch("v4.json?t="+Date.now());if(r.ok){const d=await r.json();if(d&&d.asOf){D.v4=d;v4();}}}catch(e){}
     return;}
   const db=await window.claude.use("db");if(!db)return;
   const unwrap=s=>{if(!s)return null;const d=typeof s.data==="function"?s.data():(s.data??s);return d&&d.asOf?d:null;};
